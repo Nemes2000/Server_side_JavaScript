@@ -1,0 +1,123 @@
+éttermek inálatuk és rendelések
+	-index.html - éttermek listája, éttermek kinálatára lehet navigálni
+	-offer.html - 	adott étterem kinálata
+					rendelni lehet-> orders.html
+					újat lehet létrehozni->newoffer.html
+					meglévő modositasa-> newoffer.html
+					törlés
+	-newoffer.html - uj vagy meglévő kinálat létrehozása/módosítása
+	-orders.html - rendelések listája, kipipalva törlés és maradunk az oldalon
+	-canteens.html - éttermek listája
+					 újat létrehozni->newcanteens.html
+					 módosítani->newcanteens.html
+					 törlés
+	-newcanteens.html - uj vagy meglévő étterem létrehozása/módosítása
+	
+Routing
+
+renderMW()
+
+getCanteensNameMW(); ---------?
+getCanteenMW();
+getCanteensMW();
+delCanteenMW();
+saveCanteenMW();
+
+getOffersMW();
+getOfferMW();
+saveOfferMW();
+delOfferMW();
+
+getOrderMW();
+getOrdersMW();
+delOrderMW();
+saveOrderMW(); -> nem  kell modositasra
+
+
+GET 	/canteenlist						- index.html
+			getCanteensNameMW()
+			renderMW(index.html)
+
+GET 	/canteen							- canteens.html
+			getCanteensMW()
+			renderMW(canteens.html)
+			
+GET		/canteen/del/:canteenid
+			getCanteenMW();
+			delCanteenMW();
+			redirect to /canteen
+
+GET,POST   /canteen/new						- newcanteens.html 
+			=> ha res.locals-on van adat akkor ne uj jojjon letre hanem ezt irja ki
+			   ha nincs post paraméterben leküldve az adat akkor nextet hiv
+			   ha van adat akkor megprobálja lementeni és ha hiba van nextet hiv
+					ha nincs hiba tovább irányit
+			saveCanteenMW()
+				//nincs canteen name -> GET-nél nem csinál semmit
+				if(typeof req.body.name === 'undefined'){
+					return next();
+				}
+				//adatok feldolgozása
+				//ha sikerül a mentés
+					res.redirect(/canteen);
+				//ha nem akkor ezen átadom a hibat
+				res.locals==...
+				next();
+				
+			renderMw(newcanteens.html)
+				-ha volt valami beküldve akkor feltöltődik
+				-ha nem akkor nem
+			redirect to /canteen
+
+
+GET,POST    /canteen/edit/:canteenid			- newcanteens.html
+				getCanteenMW()
+				saveCanteenMW()
+				renderMW(newcanteens.html)	
+			redirect to /canteen
+	
+GET 	/offer/:canteenid					- offer.html
+				getCanteenMW()
+				getOffersMW()
+				renderMW();
+
+GET	    /offer/:canteenid/del/:offerid
+			getCanteenMW(); -> validálja hogy van e ilyen canteen
+			getOfferMW()
+				db("...", function(result){
+					if(result.length==0)
+						return res.redirect(/offer/:canteenid);
+					res.locals.offer == result[0];
+					next();
+				}	
+			delOfferMW()
+				res.locals.offer.delete();
+				res.redirect(/offer/:canteenid
+		redirect to /offer/:canteenid	
+
+GET,POST  /offer/:canteenid/new/:offerid		- newoffer.html
+			saveOfferMW();	
+			renderMW();
+		redirect to /offer/:canteenid	
+
+GET, POST	/offer/:canteenid/edit/:offerid		- newoffer.html
+				getCanteenMW();
+				getOfferMW()
+				saveOfferMW();
+				renderMW(newoffer.html)
+			redirect to /offer/:canteenid	
+
+GET		/order								- orders.html
+			getOrdersMW()
+			renderMW()
+
+GET		/order/del/:orderid			
+			getOrderMW();
+			delOrderMW();
+		redirect to /order			
+		
+			
+GET, POST 	/order/new
+				saveOrderMW()	
+				renderMW()
+			redirect to /order

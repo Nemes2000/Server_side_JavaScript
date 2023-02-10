@@ -1,0 +1,60 @@
+.addnew{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 10px;
+}
+
+.form-check{
+    display: flex;
+    justify-content: center;
+}
+
+label{
+    margin-right: 10px;
+}
+
+#offers{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#row {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0GW-G4lCA2-TUQ6gfohBwGgE6-aVUO-ou-w&usqp=CAU");
+    background-repeat: no-repeat;
+}
+
+/*row height set and margin after*/
+#canteen-row {
+    display: grid;
+    grid-template-rows: 150px 10px;
+}
+
+a#offers:link { 
+    text-decoration: none; 
+    color: white;
+}
+
+
+a#offers:visited { 
+    text-decoration: none; 
+    color: white;
+}
+
+
+a#offers:hover { 
+    text-decoration: none; 
+    color: white;
+}
+
+
+a#offers:active { 
+    text-decoration: none; 
+    color: white;
+}
