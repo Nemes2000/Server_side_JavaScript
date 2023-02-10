@@ -22,15 +22,15 @@ module.exports = function (app) {
     //   commentModel: commentModel
     };
 
-    app.get('/canteenlist', 
+    app.use('/canteenlist', 
         getCanteensNameMW(objectRepository),
-        renderMW(objectRepository,"task"));
+        renderMW("task"));
     
-    app.get('/canteen',
+    app.use('/canteen',
         getCanteensMW(objectRepository),
         renderMW(objectRepository,"task"));
     
-    app.get('/canteen/del/:canteenid',
+    app.use('/canteen/del/:canteenid',
         getCanteenMW(objectRepository),
         delCantenMW(objectRepository),
         //simple redirect
@@ -53,12 +53,12 @@ module.exports = function (app) {
             return res.redirect('/canteenlist');
         });
 
-    app.get('/offer/:canteenid',
+    app.use('/offer/:canteenid',
         getCanteenMW(objectRepository),
         getOffersMW(objectRepository),
         renderMW(objectRepository,"task"));
 
-    app.get('/offer/:canteenid/del/:offerid',
+    app.use('/offer/:canteenid/del/:offerid',
         getCanteenMW(objectRepository),
         getOfferMW(objectRepository),
         delOfferMW(objectRepository),
@@ -83,11 +83,11 @@ module.exports = function (app) {
             return res.redirect('/offer/' + req.param('canteenid'));
         });
 
-    app.get('/order',
+    app.use('/order',
         getOrdersMW(objectRepository),
         renderMW(objectRepository,"task"));
     
-    app.get('/order/del/:orderid',
+    app.use('/order/del/:orderid',
         getOrderMW(objectRepository),
         delOrderMW(objectRepository),
         function (req, res, next) {

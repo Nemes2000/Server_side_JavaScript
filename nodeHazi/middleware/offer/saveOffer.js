@@ -4,4 +4,8 @@
         ha post hivás van akkor az adatokkal dolgozok
             ha sikerült a mentés akkor átirányitom a /offer/:canteenid oldalra
             ha nem sikerült a mentés át adom hogy mi volt a hoba és tovább hivok*/
-module.exports = function (objectrepository) {}
+module.exports = function (objectrepository) {
+    return function (req, res, next) {
+        next();
+    }
+}
