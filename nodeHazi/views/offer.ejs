@@ -1,0 +1,50 @@
+<%- include('header', {active : ''}) -%>
+<main class="container ">
+  <div class="addnew d-flex justify-content-end mb-3">
+    <a href="/offer/1/new" class="btn btn-primary">Add new dish</a>
+  </div>
+  <div class="row" id="offers-row">
+    <div class="col-12" id="offer-table">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th>
+            Dish
+          </th>
+          <th>
+            Price(in Ft)
+          </th>
+          <th>
+            Description
+          </th>
+          <th>
+            Order
+          </th>
+          <th>
+            &nbsp;
+          </th>
+        </tr>
+        <% offers.forEach(function(offer){ %>
+          <tr>
+            <td>
+              <%= offer.name %>
+            </td>
+            <td>
+              <%= offer.price %>
+            </td>
+            <td>
+              <%= offer.desc %>
+            </td>
+            <td>
+              <input type="number" min="0" max="10" step="1" value="0">
+              <a href="/order/new" class="btn btn-primary">Order</a>
+            </td>
+            <td>
+              <a href="/offer/1/edit/<%= offer._id %>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+              <a href="/offer/1/del/<%= offer._id %>" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
+            </td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+  </div>
+<%- include('footer') -%>

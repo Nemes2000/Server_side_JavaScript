@@ -1,0 +1,44 @@
+<%- include('header', {active: 'order'}) -%>
+<main class="container ">
+  <div>
+    <p><h1>Orders</h1></p>
+  </div>
+  <div class="row" id="offers-row">
+    <div class="col-12" id="offer-table">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th>
+            Canteens name
+          </th>
+          <th>
+            Cost in Ft
+          </th>
+          <th>
+            Order's content
+          </th>
+          <th>
+            Delivered
+          </th>
+        </tr>
+        <% orders.forEach(function(order){ %>
+          <tr>
+            <td>
+              <%= order.from %>
+            </td>
+            <td>
+              <%= order.cost %>
+            </td>
+            <td>
+              <%= order.cont %>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <form action="/order/del/<%= order._id %>"><button class="btn-danger" value="Kész">Kész</button></form>
+              </div>
+            </td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+  </div>
+<%- include('footer') -%>

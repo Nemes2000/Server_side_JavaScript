@@ -1,0 +1,22 @@
+<%- include('header', {active : ''}) -%>
+<main>
+  <form action="/offer">
+    <div class="col-6 mx-auto">
+      <h3>
+        <% if (typeof offer === 'undefined') { %>
+          New 
+        <% } else{ %>
+          Modify 
+        <% } %>
+          dish</h3>
+    
+    <label for="name" class="col-auto">Dish name</label>
+    <input class="col-3 form-control" type="text" id="name" value="<%= (typeof offer === 'undefined') ? '' : offer.name %>" required><br>
+    <label for="leader">Price</label>
+    <input class="col-3 form-control" type="text" id="leader" value="<%= (typeof offer === 'undefined') ? '' : offer.price %>" required><br>
+    <label for="description">Description</label>
+    <textarea class="col-3 form-control" type="text" rows="4" id="description"><%= (typeof offer === 'undefined') ? '' : offer.desc %></textarea><br>
+    <input type="submit" value="Submit" class="btn btn-primary">
+    </div>
+  </form>
+<%- include('footer') -%>

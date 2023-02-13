@@ -1,6 +1,5 @@
 var getCanteensMW = require('../middleware/canteen/getCanteens');
 var getCanteenMW = require('../middleware/canteen/getCanteen');
-var getCanteensNameMW = require('../middleware/canteen/getCanteensName');
 var delCantenMW = require('../middleware/canteen/delCanteen');
 var saveCanteenMW = require('../middleware/canteen/saveCanteen');
 
@@ -21,14 +20,6 @@ module.exports = function (app) {
     //   taskModel: taskModel,
     //   commentModel: commentModel
     };
-
-    app.use('/canteenlist', 
-        getCanteensNameMW(objectRepository),
-        renderMW("task"));
-    
-    app.use('/canteen',
-        getCanteensMW(objectRepository),
-        renderMW(objectRepository,"task"));
     
     app.use('/canteen/del/:canteenid',
         getCanteenMW(objectRepository),
@@ -40,23 +31,16 @@ module.exports = function (app) {
     
     app.use('/canteen/new',
         saveCanteenMW(objectRepository),
-        //simple redirect
-        function (req, res, next) {
-            return res.redirect('/canteenlist');
-        });
+        renderMW(objectRepository,"newcanteen"));
 
     app.use('/canteen/edit/:canteenid',
         getCanteenMW(objectRepository),
         saveCanteenMW(objectRepository),
-        //simple redirect
-        function (req, res, next) {
-            return res.redirect('/canteenlist');
-        });
+        renderMW(objectRepository,"newcanteen"));
 
-    app.use('/offer/:canteenid',
-        getCanteenMW(objectRepository),
-        getOffersMW(objectRepository),
-        renderMW(objectRepository,"task"));
+    app.use('/canteen',
+        getCanteensMW(objectRepository),
+        renderMW(objectRepository,"canteens"));
 
     app.use('/offer/:canteenid/del/:offerid',
         getCanteenMW(objectRepository),
@@ -67,25 +51,20 @@ module.exports = function (app) {
             return res.redirect('/offer/' + req.param('canteenid'));
         });
     
-    app.use('/offer/:canteenid/new/:offerid',
+    app.use('/offer/:canteenid/new',
         saveOfferMW(objectRepository),
-        //simple redirect
-        function (req, res, next) {
-            return res.redirect('/offer/' + req.param('canteenid'));
-        });
+        renderMW(objectRepository,"newoffer"));
 
     app.use('/offer/:canteenid/edit/:offerid',
         getCanteenMW(objectRepository),
         getOfferMW(objectRepository),
         saveOfferMW(objectRepository),
-        //simple redirect
-        function (req, res, next) {
-            return res.redirect('/offer/' + req.param('canteenid'));
-        });
+        renderMW(objectRepository,"newoffer"));
 
-    app.use('/order',
-        getOrdersMW(objectRepository),
-        renderMW(objectRepository,"task"));
+    app.use('/offer/:canteenid',
+        getCanteenMW(objectRepository),
+        getOffersMW(objectRepository),
+        renderMW(objectRepository,"offer"));
     
     app.use('/order/del/:orderid',
         getOrderMW(objectRepository),
@@ -96,8 +75,15 @@ module.exports = function (app) {
     
     app.use('/order/new',
         saveOrderMW(objectRepository),
-        //simple redirect
         function (req, res, next) {
             return res.redirect('/order');
         });
+
+    app.use('/order',
+        getOrdersMW(objectRepository),
+        renderMW(objectRepository,"orders"));
+
+    app.use('/', 
+        getCanteensMW(objectRepository),
+        renderMW(objectRepository, "index"));
 }

@@ -1,0 +1,49 @@
+<%- include('header', {active : 'canteen'}) -%>
+<main class="container ">
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/canteen/new" class="btn btn-primary">Add new canteen</a>
+    </div>
+    <div class="row" >
+        <div class="col-12" id="offer-table">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>
+                        Canteen name
+                    </th>
+                    <th>
+                        Leader
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Mobile number
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+                <% canteens.forEach(function(canteen){ %>
+                    <tr>
+                        <td>
+                            <%= canteen.name %>
+                        </td>
+                        <td>
+                            <%= canteen.leader%>
+                        </td>
+                        <td>
+                            <%= canteen.desc %>
+                        </td>
+                        <td>
+                            <%= canteen.mobil %>
+                        </td>
+                        <td>
+                            <a href="/canteen/edit/<%= canteen._id %>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="/canteen/del/<%= canteen._id %>" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </table>
+        </div>
+    </div>
+<%- include('footer') -%>
