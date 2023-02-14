@@ -12,11 +12,12 @@ module.exports = function (objectrepository) {
             {
                 _id : "2",
                 name : "kettes",
-                leader : "nev1",
-                desc : "leiras1",
+                leader : "nev2",
+                desc : "leiras2",
                 mobil : "1111111"
             }
         ]
+        console.log("getcanteens");
         next();
     }
 }

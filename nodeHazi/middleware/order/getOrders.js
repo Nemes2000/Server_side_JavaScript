@@ -11,11 +11,11 @@ module.exports = function (objectrepository) {
             {
                 _id : "2",
                 from : "kettes",
-                cost : "nev1",
-                cont : "leiras1"
+                cost : "nev2",
+                cont : "leiras2"
             }
         ]
-
+        console.log("getorders");
         next();
     }
 }

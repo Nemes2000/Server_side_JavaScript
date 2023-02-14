@@ -1,7 +1,7 @@
 /* A tartalmat jeleniti meg*/
 module.exports = function (objectrepository, viewName) {
     return function (req, res, next) {
-        console.log("render"+viewName);
+        console.log("render "+viewName+"\n");
         res.render(viewName, res.locals);
     }
 }

@@ -1,6 +1,6 @@
 <%- include('header', {active : ''}) -%>
 <main>
-  <form action="/canteen">
+  <form action="/canteen/save" method="POST" >
     <div class="col-6 mx-auto">
       <h3>
         <% if (typeof canteen === 'undefined') { %>
@@ -9,15 +9,17 @@
           Modify 
         <% } %>
           canteen</h3>
-    
+    <% if (typeof canteen !== 'undefined') { %>
+    <input type="hidden" name="_id" value="<%=canteen._id%>">
+    <% } %> 
     <label for="name" class="col-auto">Canteen name</label>
-    <input class="col-3 form-control" type="text" id="name" value="<%= (typeof canteen === 'undefined') ? '' : canteen.name %>" required><br>
+    <input class="col-3 form-control" name="name" type="text" id="name" value="<%= (typeof canteen === 'undefined') ? '' : canteen.name %>" required><br>
     <label for="leader">Leader</label>
-    <input class="col-3 form-control type="text" id="leader" value="<%= (typeof canteen === 'undefined') ? '' : canteen.leader %>" required><br>
+    <input class="col-3 form-control" name="leader" type="text" id="leader" value="<%= (typeof canteen === 'undefined') ? '' : canteen.leader %>" required><br>
     <label for="contact">Mobile number</label>
-    <input class="col-3 form-control" type="text" id="contact" value="<%= (typeof canteen === 'undefined') ? '' : canteen.mobil %>" required><br>
+    <input class="col-3 form-control" name="mobil" type="text" id="contact" value="<%= (typeof canteen === 'undefined') ? '' : canteen.mobil %>" required><br>
     <label for="description">Description</label>
-    <textarea class="col-3 form-control" rows="4" type="text" id="description"><%= (typeof canteen === 'undefined') ? '' : canteen.desc %></textarea><br>
+    <textarea class="col-3 form-control" name="desc" rows="4" type="text" id="description"><%= (typeof canteen === 'undefined') ? '' : canteen.desc %></textarea><br>
     <input type="submit" value="Submit" class="btn btn-primary">
     </div>
   </form>

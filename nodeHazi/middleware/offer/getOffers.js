@@ -13,8 +13,15 @@ module.exports = function (objectrepository) {
                 name : "kettes",
                 price : "2000",
                 desc : "leiras2"
+            },
+            {
+                _id : "3",
+                name : "harmas",
+                price : "3000",
+                desc : "leiras3"
             }
         ]
+        console.log("getoffers");
         next();
     }
 }

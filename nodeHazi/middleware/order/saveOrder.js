@@ -4,6 +4,15 @@
         ha nem sikerült a mentés át adom hogy mi volt a hoba és tovább hivok*/
 module.exports = function (objectrepository) {
         return function (req, res, next) {
+                const value = res.locals.offer.price * res.locals.offer.db;
+                res.locals.order = {
+                        from : res.locals.canteen.name,
+                        cost : value,
+                        cont : res.locals.offer.name
+                };
+
+                console.log("saveorder");
+                console.log(res.locals.order);
                 next();
         }
 }

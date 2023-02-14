@@ -6,6 +6,23 @@
             ha nem sikerült a mentés át adom hogy mi volt a hoba és tovább hivok*/
 module.exports = function (objectrepository) {
     return function (req, res, next) {
+        if(typeof req.body._id === "undefined"){
+            res.locals.canteen = {
+                name : req.body.name,
+                leader : req.body.leader,
+                desc : req.body.desc,
+                mobil : req.body.mobil
+            }
+        }else{
+            res.locals.canteen.name = req.body.name;
+            res.locals.canteen.leader = req.body.leader;
+            res.locals.canteen.mobil = req.body.mobil;
+            res.locals.canteen.desc = req.body.desc;
+        }
+        
+        //mentes adatbazisba
+        console.log("savecanteen");
+        console.log(req.body);
         next();
     }
 }

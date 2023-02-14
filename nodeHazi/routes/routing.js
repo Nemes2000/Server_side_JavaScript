@@ -1,24 +1,23 @@
-var getCanteensMW = require('../middleware/canteen/getCanteens');
-var getCanteenMW = require('../middleware/canteen/getCanteen');
-var delCantenMW = require('../middleware/canteen/delCanteen');
-var saveCanteenMW = require('../middleware/canteen/saveCanteen');
+const getCanteensMW = require('../middleware/canteen/getCanteens');
+const getCanteenMW = require('../middleware/canteen/getCanteen');
+const delCantenMW = require('../middleware/canteen/delCanteen');
+const saveCanteenMW = require('../middleware/canteen/saveCanteen');
 
-var getOffersMW = require('../middleware/offer/getOffers');
-var getOfferMW = require('../middleware/offer/getOffer');
-var delOfferMW = require('../middleware/offer/delOffer');
-var saveOfferMW = require('../middleware/offer/saveOffer');
+const getOffersMW = require('../middleware/offer/getOffers');
+const getOfferMW = require('../middleware/offer/getOffer');
+const delOfferMW = require('../middleware/offer/delOffer');
+const saveOfferMW = require('../middleware/offer/saveOffer');
 
-var getOrdersMW = require('../middleware/order/getOrders');
-var getOrderMW = require('../middleware/order/getOrder');
-var delOrderMW = require('../middleware/order/delOrder');
-var saveOrderMW = require('../middleware/order/saveOrder');
+const getOrdersMW = require('../middleware/order/getOrders');
+const getOrderMW = require('../middleware/order/getOrder');
+const delOrderMW = require('../middleware/order/delOrder');
+const saveOrderMW = require('../middleware/order/saveOrder');
 
 var renderMW = require('../middleware/generic/render');
 
 module.exports = function (app) {
     var objectRepository = {
-    //   taskModel: taskModel,
-    //   commentModel: commentModel
+      
     };
     
     app.use('/canteen/del/:canteenid',
@@ -26,16 +25,21 @@ module.exports = function (app) {
         delCantenMW(objectRepository),
         //simple redirect
         function (req, res, next) {
-            return res.redirect('/canteenlist');
+            return res.redirect('/canteen');
         });
     
     app.use('/canteen/new',
-        saveCanteenMW(objectRepository),
         renderMW(objectRepository,"newcanteen"));
+
+    app.use("/canteen/save",
+        getCanteenMW(objectRepository),
+        saveCanteenMW(objectRepository),
+        function (req, res, next) {
+            return res.redirect('/canteen');
+        });
 
     app.use('/canteen/edit/:canteenid',
         getCanteenMW(objectRepository),
-        saveCanteenMW(objectRepository),
         renderMW(objectRepository,"newcanteen"));
 
     app.use('/canteen',
@@ -52,13 +56,20 @@ module.exports = function (app) {
         });
     
     app.use('/offer/:canteenid/new',
-        saveOfferMW(objectRepository),
+        getCanteenMW(objectRepository),
         renderMW(objectRepository,"newoffer"));
+
+    app.use("/offer/:canteenid/save",
+        getCanteenMW(objectRepository),
+        getOfferMW(objectRepository),
+        saveOfferMW(objectRepository),
+        function (req, res, next) {
+            return res.redirect('/offer/'+res.locals.canteen._id);
+        });
 
     app.use('/offer/:canteenid/edit/:offerid',
         getCanteenMW(objectRepository),
         getOfferMW(objectRepository),
-        saveOfferMW(objectRepository),
         renderMW(objectRepository,"newoffer"));
 
     app.use('/offer/:canteenid',
@@ -74,6 +85,8 @@ module.exports = function (app) {
         });
     
     app.use('/order/new',
+        getCanteenMW(objectRepository),
+        getOfferMW(objectRepository),
         saveOrderMW(objectRepository),
         function (req, res, next) {
             return res.redirect('/order');

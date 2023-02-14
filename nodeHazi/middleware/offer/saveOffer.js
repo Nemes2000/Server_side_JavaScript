@@ -6,6 +6,22 @@
             ha nem sikerült a mentés át adom hogy mi volt a hoba és tovább hivok*/
 module.exports = function (objectrepository) {
     return function (req, res, next) {
+        if(typeof req.body._id === "undefined"){
+            res.locals.offer = {
+                name : req.body.name,
+                price : req.body.price,
+                desc : req.body.desc,
+            }
+        }else{
+            res.locals.offer.name = req.body.name;
+            res.locals.offer.price = req.body.price;
+            res.locals.offer.desc = req.body.desc;
+        }
+        
+        //mentes adatbazisba
+
+        console.log("saveoffer");
+        console.log(req.body);
         next();
     }
 }

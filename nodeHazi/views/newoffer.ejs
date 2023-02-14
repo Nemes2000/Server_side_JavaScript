@@ -1,6 +1,6 @@
 <%- include('header', {active : ''}) -%>
 <main>
-  <form action="/offer">
+  <form action="/offer/<%=canteen._id%>/save" method="POST">
     <div class="col-6 mx-auto">
       <h3>
         <% if (typeof offer === 'undefined') { %>
@@ -9,13 +9,15 @@
           Modify 
         <% } %>
           dish</h3>
-    
+    <% if (typeof offer !== 'undefined') { %>
+    <input type="hidden" name="_id" value="<%=offer._id %>">
+    <% } %>  
     <label for="name" class="col-auto">Dish name</label>
-    <input class="col-3 form-control" type="text" id="name" value="<%= (typeof offer === 'undefined') ? '' : offer.name %>" required><br>
+    <input class="col-3 form-control" name="name" type="text" id="name" value="<%= (typeof offer === 'undefined') ? '' : offer.name %>" required><br>
     <label for="leader">Price</label>
-    <input class="col-3 form-control" type="text" id="leader" value="<%= (typeof offer === 'undefined') ? '' : offer.price %>" required><br>
+    <input class="col-3 form-control" name="price" type="text" id="leader" value="<%= (typeof offer === 'undefined') ? '' : offer.price %>" required><br>
     <label for="description">Description</label>
-    <textarea class="col-3 form-control" type="text" rows="4" id="description"><%= (typeof offer === 'undefined') ? '' : offer.desc %></textarea><br>
+    <textarea class="col-3 form-control" name="desc" type="text" rows="4" id="description"><%= (typeof offer === 'undefined') ? '' : offer.desc %></textarea><br>
     <input type="submit" value="Submit" class="btn btn-primary">
     </div>
   </form>
