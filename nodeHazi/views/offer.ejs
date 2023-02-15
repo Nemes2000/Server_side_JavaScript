@@ -32,11 +32,11 @@
               <%= offer.price %>
             </td>
             <td>
-              <%= offer.desc %>
+              <%= offer.description %>
             </td>
             <td>
               <input type="number" name="db" min="0" max="10" step="1" value="0">
-              <a href="/order/new" class="btn btn-primary">Order</a>
+              <a href="/order/new/<%=canteen._id%>/<%=offer._id%>" class="btn btn-primary">Order</a>
             </td>
             <td>
               <a href="/offer/<%=canteen._id%>/edit/<%= offer._id %>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>

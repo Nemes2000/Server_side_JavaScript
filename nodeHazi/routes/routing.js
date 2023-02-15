@@ -13,23 +13,27 @@ const getOrderMW = require('../middleware/order/getOrder');
 const delOrderMW = require('../middleware/order/delOrder');
 const saveOrderMW = require('../middleware/order/saveOrder');
 
-var renderMW = require('../middleware/generic/render');
+const renderMW = require('../middleware/generic/render');
+
+const CanteenModel = require('../models/canteen');
+const OfferModel = require('../models/offer');
+const OrderModel = require("../models/order");
 
 module.exports = function (app) {
     var objectRepository = {
-      
+        CanteenModel: CanteenModel,
+        OfferModel: OfferModel,
+        OrderModel: OrderModel
     };
     
     app.use('/canteen/del/:canteenid',
         getCanteenMW(objectRepository),
+        getOffersMW(objectRepository),
         delCantenMW(objectRepository),
         //simple redirect
         function (req, res, next) {
             return res.redirect('/canteen');
         });
-    
-    app.use('/canteen/new',
-        renderMW(objectRepository,"newcanteen"));
 
     app.use("/canteen/save",
         getCanteenMW(objectRepository),
@@ -40,6 +44,9 @@ module.exports = function (app) {
 
     app.use('/canteen/edit/:canteenid',
         getCanteenMW(objectRepository),
+        renderMW(objectRepository,"newcanteen"));
+
+    app.use('/canteen/new',
         renderMW(objectRepository,"newcanteen"));
 
     app.use('/canteen',
@@ -84,7 +91,7 @@ module.exports = function (app) {
             return res.redirect('/order');
         });
     
-    app.use('/order/new',
+    app.use('/order/new/:canteenid/:offerid',
         getCanteenMW(objectRepository),
         getOfferMW(objectRepository),
         saveOrderMW(objectRepository),

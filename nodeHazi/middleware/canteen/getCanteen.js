@@ -1,18 +1,18 @@
 //paraméterként kapott étterem adatait szerzi meg az adatbázisból
-module.exports = function (objectrepository) {
-    return function (req, res, next) {
-        // if(typeof req.body === "undefined"){
-        //     return next();
-        // }
+const requireOption = require('../requireOption');
 
-        res.locals.canteen = {
-            _id : "2",
-            name : "egyes",
-            leader : "nev1",
-            desc : "leiras1.......................................",
-            mobil : "0000000"
-        };
-        console.log("getcanteen");
-        next();
+module.exports = function (objectrepository) {
+    const CanteenModel = requireOption(objectrepository, 'CanteenModel');
+    
+    return function (req, res, next) { 
+        CanteenModel.findOne({_id: req.params.canteenid}, 
+            (err, canteen) => {
+                if(err || !canteen)
+                    return next(err);
+
+                res.locals.canteen = canteen;
+                return next();
+            }
+        );
     }
 }

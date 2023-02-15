@@ -1,27 +1,18 @@
 //Adott étterem menű kinálatát szerzi meg az adatbázisból
+const requireOption = require('../requireOption');
+
 module.exports = function (objectrepository) {
+    const OfferModel = requireOption(objectrepository, 'OfferModel');
+    
     return function (req, res, next) {
-        res.locals.offers = [
-            {
-                _id : "1",
-                name : "egyes",
-                price : "1000",
-                desc : "leiras1"
-            },
-            {
-                _id : "2",
-                name : "kettes",
-                price : "2000",
-                desc : "leiras2"
-            },
-            {
-                _id : "3",
-                name : "harmas",
-                price : "3000",
-                desc : "leiras3"
-            }
-        ]
+        
         console.log("getoffers");
-        next();
+        OfferModel.find({_producer: res.locals.canteen._id}, (err, offers) => {
+            if(err)
+                return next(err);
+
+            res.locals.offers = offers;
+            return next();
+        });
     }
 }

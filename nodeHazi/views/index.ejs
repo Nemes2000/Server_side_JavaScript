@@ -1,9 +1,10 @@
   <%- include('header', {active : 'home'}) -%>
   <main class="container ">
     <% canteens.forEach(function(canteen){ %>
-      <div class="row mb-3" >
+      <div class="row mb-3">
         <div class="col-12 bg-secondary p-3" id="row">
-          <a href="/offer/<%= canteen._id %>" id="offers" class="d-flex justify-content-center align-items-center"><%= canteen.name %> offer</a>
+          <a href="/offer/<%= canteen._id %>" id="offers" 
+            class="d-flex justify-content-center align-items-center text-decoration-none text-white h1 font-weight-bold" ><%= canteen.name %> offer</a>
         </div>
       </div>
     <% }); %>

@@ -1,17 +1,22 @@
 //adott étterem adott ételét kérdezi le az adatbázisból
-module.exports = function (objectrepository) {
-    return function (req, res, next) {
-        // if(typeof req.body === "undefined"){
-        //     return next();
-        // }
+const requireOption = require('../requireOption');
 
-        res.locals.offer = {
-            _id : "1",
-            name : "egyes",
-            price : "1000",
-            desc : "leiras1................................"
-        };
+module.exports = function (objectrepository) {
+    const OfferModel = requireOption(objectrepository, 'OfferModel');
+
+    return function (req, res, next) {
         console.log("getoffer");
-        next();
+
+        OfferModel.findOne({$and: [
+            {_producer: res.locals.canteen._id},
+            {_id: req.params.offerid}]}, 
+            (err, offer) => {
+                if(err)
+                    return next(err);
+
+                res.locals.offer = offer;
+                return next();
+            }
+        );
     }
 }
