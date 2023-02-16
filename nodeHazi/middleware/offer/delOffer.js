@@ -1,9 +1,6 @@
-//adott étterem adott éetlét törli
-const requireOption = require('../requireOption');
+//adott canteen adott kinalatat torli
 
 module.exports = function (objectrepository) {
-    const OfferModel = requireOption(objectrepository, 'OfferModel');
-    
     return function (req, res, next) {
         if(typeof res.locals.offer === 'undefined'){
             return next();
@@ -11,9 +8,10 @@ module.exports = function (objectrepository) {
 
         res.locals.offer.remove(
             (err) => {
-                if(err)
+                if(err){
                     return next(err);
-                return next();
+                }
+                return res.redirect('/offer/' + req.params.canteenid);
             }
         );
     }

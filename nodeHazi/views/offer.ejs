@@ -35,8 +35,10 @@
               <%= offer.description %>
             </td>
             <td>
-              <input type="number" name="db" min="0" max="10" step="1" value="0">
-              <a href="/order/new/<%=canteen._id%>/<%=offer._id%>" class="btn btn-primary">Order</a>
+              <form method="POST" action="/order/new/<%=canteen._id%>/<%=offer._id%>">
+                <input type="number" name="db" min="1" max="30" step="1" value="1">
+                <button type="submit" class="btn btn-primary">Order</button>
+              </form>
             </td>
             <td>
               <a href="/offer/<%=canteen._id%>/edit/<%= offer._id %>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>

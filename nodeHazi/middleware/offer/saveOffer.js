@@ -1,17 +1,11 @@
-/* ha a res.locals-on volt adat azaz modosítani akarnak akkor ne jöjjön létre egy új
-   ha viszont nincsen rajta adat akkor ujat szeretnének létre hozni
-        ha get hivás van nem csinál semmit
-        ha post hivás van akkor az adatokkal dolgozok
-            ha sikerült a mentés akkor átirányitom a /offer/:canteenid oldalra
-            ha nem sikerült a mentés át adom hogy mi volt a hoba és tovább hivok*/
+/* ha a res.body-on volt rejtett adat akkor módositas van
+   ha viszont nincsen rajta adat akkor új canteen-t kell létrehozni
+        majd elmenti az adatokat*/
 const requireOption = require('../requireOption');
 
 module.exports = function (objectrepository) {
     const OfferModel = requireOption(objectrepository, 'OfferModel');
-    
     return function (req, res, next) {
-        console.log("saveoffer");
-
         if(typeof req.body._id === 'undefined'){
             res.locals.offer = new OfferModel();
         }
@@ -22,9 +16,10 @@ module.exports = function (objectrepository) {
         res.locals.offer._producer = req.params.canteenid;
 
         res.locals.offer.save((err) => {
-            if(err)
-                return next(err);
-            return next();
+            if(err){
+                return next(err); 
+            }
+            return res.redirect('/offer/'+res.locals.canteen._id);
         });
     }
 }

@@ -5,11 +5,10 @@ module.exports = function (objectrepository) {
     const CanteenModel = requireOption(objectrepository, 'CanteenModel');
     
     return function (req, res, next) {
-        console.log("getcanteens");
         CanteenModel.find({}, (err, canteens) => {
-            if(err)
-                return next(err);
-
+            if(err){
+                return next(err); 
+            }
             res.locals.canteens = canteens;
             return next();
         });
