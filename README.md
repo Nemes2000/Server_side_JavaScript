@@ -1,6 +1,5 @@
 # Serversite_JavaScript
 
-## Navigation
- - hazi*: 
+This project was made due to an university course homework.
 
-## Specification
+About the project you can learn more in the <i>spec</i> folder.
