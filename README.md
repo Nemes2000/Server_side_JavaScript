@@ -1,4 +1,4 @@
-# Serversite_JavaScript
+# Server_side_JavaScript
 
 This project was made due to an university course homework.
 
